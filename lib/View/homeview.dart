@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:notes_apk/View/addnote.dart';
 import 'package:notes_apk/config/constante.dart';
 import 'package:notes_apk/shared/addnotecader.dart';
+import 'package:notes_apk/shared/notes_cader.dart';
 import 'package:notes_apk/sqldb.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../shared/search&favorit.dart';
 
 class HomeView extends StatefulWidget {
@@ -39,64 +39,53 @@ class _HomeViewState extends State<HomeView> {
           // Add a ListView to the drawer. This ensures the user can scroll
           // through the options in the drawer if there isn't enough vertical
           // space to fit everything.
+          child: ListView(padding: EdgeInsets.zero, children: []),
+        ),
+        body: Container(
+          margin: EdgeInsets.all(15),
           child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
             children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
+              FutureBuilder(
+                  future: readData(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<Map>> snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, i) {
+                            return NotesCader(
+                              title: "${snapshot.data![i]['titel']}",
+                              note: "${snapshot.data![i]['note']}",
+                            );
+                          });
+                    } else {
+                      return Text("");
+                    }
+                  }),
+              Container(
+                margin: const EdgeInsets.only(top: 40, left: 15),
+                child: const Text(
+                  "Your Notes",
+                  style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.normal,
+                      color: Colors.white),
                 ),
-                child: Text('Drawer Header'),
               ),
-              ListTile(
-                title: const Text('Item 1'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
+              const SizedBox(
+                height: AppConstant.heightBar * .4,
               ),
-              ListTile(
-                title: const Text('Item 2'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
+              Search_favorit(),
+              SizedBox(
+                height: AppConstant.screenHeight * .04,
               ),
+              GestureDetector(
+                  onTap: () => Get.to(Add_Note()), child: AddnoteCader()),
             ],
           ),
-        ),
-        body: Stack(
-          children: [
-            
-            Container(
-              margin: EdgeInsets.all(15),
-              child: ListView(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 40, left: 15),
-                    child: const Text(
-                      "Your Notes",
-                      style: TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.normal,
-                          color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: AppConstant.heightBar * .4,
-                  ),
-                  Search_favorit(),
-                  SizedBox(
-                    height: AppConstant.screenHeight * .04,
-                  ),
-                  GestureDetector(
-                      onTap: () => Get.to(Add_Note()), child: AddnoteCader()),
-                ],
-              ),
-            ),
-          ],
         ));
   }
 }
