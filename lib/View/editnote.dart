@@ -31,16 +31,18 @@ class _EditnoteState extends State<Editnote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 64, 59, 59),
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+          ? Color.fromARGB(255, 192, 191, 191)
+          : Colors.grey[900]!,
       appBar: AppBar(
-        actions: [
-          Icon(Icons.star),
-          Icon(Icons.delete),
-          Icon(Icons.save),
-        ],
+        backgroundColor: Theme.of(context).brightness == Brightness.light
+            ? Color.fromARGB(255, 192, 191, 191)
+            : Colors.grey[900]!,
       ),
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).brightness == Brightness.light
+            ? Colors.white
+            : Colors.grey[600]!,
         onPressed: () async {
           int response = await sqlDb.insertData(
               '''INSERT INTO 'notes' ('titel','note') VALUES ('${titel.text}','${note.text}')
@@ -48,11 +50,25 @@ class _EditnoteState extends State<Editnote> {
           int responsee =
               await sqlDb.deletData("DELETE FROM notes WHERE id=${widget.id}");
           if (response > 0 && responsee > 0) {
-            Get.off(HomeView(changeTheme: (Brightness brightness) {  },));
+            Get.offAll(HomeView(
+              changeTheme: (Brightness brightness) {},
+            ));
           }
         },
-        label: Text('Save'.toUpperCase()),
-        icon: Icon(Icons.save_alt_sharp),
+        label: Text(
+          'Save'.toUpperCase(),
+          style: TextStyle(
+            color: Theme.of(context).brightness == Brightness.light
+                ? Color.fromARGB(255, 110, 108, 108)
+                : Colors.white,
+          ),
+        ),
+        icon: Icon(
+          Icons.save_alt_sharp,
+          color: Theme.of(context).brightness == Brightness.light
+              ? Color.fromARGB(255, 110, 108, 108)
+              : Colors.white,
+        ),
       ),
       body: Container(
         margin: EdgeInsets.all(10),
@@ -67,13 +83,20 @@ class _EditnoteState extends State<Editnote> {
                           EdgeInsets.only(top: AppConstant.screenHeight * .05),
                       child: TextField(
                           controller: titel,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 30),
-                          decoration: const InputDecoration.collapsed(
+                          style: TextStyle(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
+                              fontSize: 30),
+                          decoration: InputDecoration.collapsed(
                               hintText: "Titel",
                               hintStyle: TextStyle(
                                   fontSize: 30,
-                                  color: Color.fromARGB(255, 168, 162, 162),
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? Colors.white
+                                      : Color.fromARGB(255, 168, 162, 162),
                                   fontWeight: FontWeight.bold))),
                     ),
                     Container(
@@ -84,13 +107,20 @@ class _EditnoteState extends State<Editnote> {
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
                           textInputAction: TextInputAction.newline,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 20),
-                          decoration: const InputDecoration.collapsed(
+                          style: TextStyle(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
+                              fontSize: 20),
+                          decoration: InputDecoration.collapsed(
                               hintText: "Start typing ...",
                               hintStyle: TextStyle(
                                   fontSize: 20,
-                                  color: Color.fromARGB(255, 168, 162, 162),
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? Colors.white
+                                      : Color.fromARGB(255, 168, 162, 162),
                                   fontWeight: FontWeight.bold))),
                     ),
                   ],

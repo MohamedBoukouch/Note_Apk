@@ -15,11 +15,14 @@ class _AddnoteCaderState extends State<AddnoteCader> {
         margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
         height: 110,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.white, width: 2),
+          border:
+              Border.all(color: Color.fromARGB(239, 179, 173, 173), width: 2),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Material(
-          color: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).brightness == Brightness.light
+              ? Color.fromARGB(151, 255, 255, 255)
+              : Colors.grey[800]!,
           borderRadius: BorderRadius.circular(16),
           clipBehavior: Clip.antiAlias,
           child: Container(

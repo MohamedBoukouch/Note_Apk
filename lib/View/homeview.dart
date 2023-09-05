@@ -29,6 +29,7 @@ class _HomeViewState extends State<HomeView> {
   IconData _iconlight = Icons.wb_sunny;
   IconData _iconnight = Icons.nights_stay;
   List notes = [];
+
   Future readData() async {
     List<Map> response = await sqlDb.readData("SELECT * FROM notes");
     notes.addAll(response);
@@ -55,21 +56,56 @@ class _HomeViewState extends State<HomeView> {
       }
     });
     return Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).brightness == Brightness.light
+            ? Color.fromARGB(255, 192, 191, 191)
+            : Colors.grey[900]!,
         // backgroundColor: _icontheme?LightTheme.colorScheme:Darktheme
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          title: Image.asset("assets/titel.png"),
+          backgroundColor: Theme.of(context).brightness == Brightness.light
+              ? Color.fromARGB(255, 192, 191, 191)
+              : Colors.grey[900]!,
+          iconTheme: IconThemeData(
+              size: 35,
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.black
+                  : Colors.white),
+          title: Container(
+            margin: EdgeInsets.only(bottom: AppConstant.screenHeight * .045),
+            alignment: Alignment.center,
+            child: Image.asset("assets/titel.png",
+                alignment: Alignment.center,
+                width: AppConstant.screenHeight * .25,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.black
+                    : Colors.white),
+          ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).brightness == Brightness.light
+              ? Colors.white
+              : Colors.grey[600]!,
           onPressed: () {
             Get.to(Add_Note());
           },
-          label: Text('Add note'.toUpperCase()),
-          icon: Icon(Icons.add),
+          label: Text(
+            'Add note'.toUpperCase(),
+            style: TextStyle(
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Color.fromARGB(255, 110, 108, 108)
+                  : Colors.white,
+            ),
+          ),
+          icon: Icon(
+            Icons.add,
+            color: Theme.of(context).brightness == Brightness.light
+                ? Color.fromARGB(255, 110, 108, 108)
+                : Colors.white,
+          ),
         ),
         endDrawer: Drawer(
+          backgroundColor: Theme.of(context).brightness == Brightness.light
+              ? Color.fromARGB(255, 192, 191, 191)
+              : Colors.grey[900]!,
           child: ListView(
               padding: EdgeInsets.only(
                   top: AppConstant.screenHeight * .07, left: 20),
@@ -86,16 +122,22 @@ class _HomeViewState extends State<HomeView> {
                     height: AppConstant.screenHeight * .2,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Color.fromARGB(151, 255, 255, 255)
+                          : Colors.grey[800]!,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text('App Theme',
-                            style: TextStyle(
-                                fontFamily: 'ZillaSlab', fontSize: 24)),
                         Container(
-                          height: 20,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text('App Theme',
+                              style: TextStyle(
+                                  fontFamily: 'ZillaSlab', fontSize: 24)),
+                        ),
+                        Container(
+                          height: 10,
                         ),
                         Row(
                           children: <Widget>[
@@ -165,11 +207,19 @@ class _HomeViewState extends State<HomeView> {
                           margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
                           height: 110,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white, width: 2),
+                            border: Border.all(
+                                color: Theme.of(context).brightness ==
+                                        Brightness.light
+                                    ? Color.fromARGB(239, 179, 173, 173)
+                                    : Colors.grey[900]!,
+                                width: 2),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Material(
-                            color: Color.fromARGB(0, 64, 59, 59),
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.white
+                                    : Colors.grey[700]!,
                             borderRadius: BorderRadius.circular(16),
                             clipBehavior: Clip.antiAlias,
                             child: Container(

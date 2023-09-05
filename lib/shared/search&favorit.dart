@@ -52,12 +52,12 @@ class _Search_favoritState extends State<Search_favorit> {
                 color: isfav ? Colors.blue : Colors.transparent,
                 border: Border.all(
                   width: isfav ? 2 : 1,
-                  color: isfav ? Colors.blue.shade700 : Colors.grey.shade300,
+                  color: isfav ? Colors.blue.shade700 : Colors.white,
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(16))),
             child: Icon(
               Icons.flag,
-              color: isfav ? Colors.white : Colors.grey.shade300,
+              color: isfav ? Colors.white : Colors.white,
             ),
           ),
         ),
@@ -68,7 +68,7 @@ class _Search_favoritState extends State<Search_favorit> {
             padding: EdgeInsets.only(left: 16),
             height: 50,
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
+                border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.all(Radius.circular(16))),
             child: Row(
               mainAxisSize: MainAxisSize.max,
@@ -88,7 +88,7 @@ class _Search_favoritState extends State<Search_favorit> {
                     decoration: InputDecoration.collapsed(
                       hintText: 'Search',
                       hintStyle: TextStyle(
-                          color: Colors.grey.shade300,
+                          color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.w500),
                       border: InputBorder.none,
@@ -97,7 +97,7 @@ class _Search_favoritState extends State<Search_favorit> {
                 ),
                 IconButton(
                   icon: Icon(isSearchEmpty ? Icons.search : Icons.cancel,
-                      color: Colors.grey.shade300),
+                      color: Colors.white),
                   onPressed: cancelSearch,
                 ),
               ],
