@@ -19,7 +19,7 @@ class _AddnoteCaderState extends State<AddnoteCader> {
           borderRadius: BorderRadius.circular(16),
         ),
         child: Material(
-          color: Color.fromARGB(0, 64, 59, 59),
+          color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(16),
           clipBehavior: Clip.antiAlias,
           child: Container(

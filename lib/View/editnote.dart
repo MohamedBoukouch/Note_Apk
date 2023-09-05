@@ -5,18 +5,28 @@ import 'package:notes_apk/View/homeview.dart';
 import 'package:notes_apk/config/constante.dart';
 import 'package:notes_apk/sqldb.dart';
 
-class Add_Note extends StatefulWidget {
-  const Add_Note({super.key});
+class Editnote extends StatefulWidget {
+  final titel;
+  final note;
+  final id;
+  Editnote({Key? key, this.note, this.titel, this.id}) : super(key: key);
 
   @override
-  State<Add_Note> createState() => _Add_NoteState();
+  State<Editnote> createState() => _EditnoteState();
 }
 
-class _Add_NoteState extends State<Add_Note> {
+class _EditnoteState extends State<Editnote> {
   Sqldb sqlDb = Sqldb();
   GlobalKey<FormState> formstate = GlobalKey();
   TextEditingController titel = TextEditingController();
   TextEditingController note = TextEditingController();
+
+  @override
+  void initState() {
+    titel.text = widget.titel;
+    note.text = widget.note;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +45,9 @@ class _Add_NoteState extends State<Add_Note> {
           int response = await sqlDb.insertData(
               '''INSERT INTO 'notes' ('titel','note') VALUES ('${titel.text}','${note.text}')
           ''');
-          if (response > 0) {
+          int responsee =
+              await sqlDb.deletData("DELETE FROM notes WHERE id=${widget.id}");
+          if (response > 0 && responsee > 0) {
             Get.off(HomeView(changeTheme: (Brightness brightness) {  },));
           }
         },

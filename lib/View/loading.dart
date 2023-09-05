@@ -21,7 +21,7 @@ class _LoadingViewState extends State<LoadingView> {
   void autoNavigation() async {
     // you can change delay here
     await Future.delayed(Duration(seconds: 10));
-    Get.off(HomeView());
+    Get.off(HomeView(changeTheme: (Brightness brightness) {  },));
   }
 
   @override

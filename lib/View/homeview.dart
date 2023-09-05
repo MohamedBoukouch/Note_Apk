@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:notes_apk/View/addnote.dart';
+import 'package:notes_apk/View/editnote.dart';
 import 'package:notes_apk/config/constante.dart';
+import 'package:notes_apk/service/sharedprefect.dart';
 import 'package:notes_apk/shared/addnotecader.dart';
 import 'package:notes_apk/shared/notes_cader.dart';
 import 'package:notes_apk/sqldb.dart';
+import 'package:notes_apk/themes/dark_theme.dart';
+import 'package:notes_apk/themes/light_theme.dart';
 import '../shared/search&favorit.dart';
 
 class HomeView extends StatefulWidget {
-  HomeView({super.key});
+  final Function(Brightness brightness) changeTheme;
+  final String? title;
+
+  HomeView({Key? key, this.title, required this.changeTheme}) : super(key: key);
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -16,17 +23,44 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   Sqldb sqlDb = Sqldb();
-
-  Future<List<Map>> readData() async {
-    List<Map> response = await sqlDb.readData("INSERT * FROM Notes");
+  late String selectedTheme;
+  bool isloading = true;
+  bool _icontheme = false;
+  IconData _iconlight = Icons.wb_sunny;
+  IconData _iconnight = Icons.nights_stay;
+  List notes = [];
+  Future readData() async {
+    List<Map> response = await sqlDb.readData("SELECT * FROM notes");
+    notes.addAll(response);
+    isloading = false;
+    if (this.mounted) {
+      setState(() {});
+    }
     return response;
   }
 
   @override
+  void initState() {
+    readData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    setState(() {
+      if (Theme.of(context).brightness == Brightness.dark) {
+        selectedTheme = 'dark';
+      } else {
+        selectedTheme = 'light';
+      }
+    });
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 64, 59, 59),
-        appBar: AppBar(),
+        backgroundColor: Theme.of(context).primaryColor,
+        // backgroundColor: _icontheme?LightTheme.colorScheme:Darktheme
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          title: Image.asset("assets/titel.png"),
+        ),
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: Theme.of(context).primaryColor,
           onPressed: () {
@@ -36,34 +70,67 @@ class _HomeViewState extends State<HomeView> {
           icon: Icon(Icons.add),
         ),
         endDrawer: Drawer(
-          // Add a ListView to the drawer. This ensures the user can scroll
-          // through the options in the drawer if there isn't enough vertical
-          // space to fit everything.
-          child: ListView(padding: EdgeInsets.zero, children: []),
+          child: ListView(
+              padding: EdgeInsets.only(
+                  top: AppConstant.screenHeight * .07, left: 20),
+              children: [
+                const Text(
+                  "Settings",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
+                Container(
+                    margin: EdgeInsets.only(right: 20, top: 40),
+                    height: AppConstant.screenHeight * .2,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text('App Theme',
+                            style: TextStyle(
+                                fontFamily: 'ZillaSlab', fontSize: 24)),
+                        Container(
+                          height: 20,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Radio(
+                              value: 'light',
+                              groupValue: selectedTheme,
+                              onChanged: handleThemeSelection,
+                            ),
+                            Text(
+                              'Light theme',
+                              style: TextStyle(fontSize: 18),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Radio(
+                              value: 'dark',
+                              groupValue: selectedTheme,
+                              onChanged: handleThemeSelection,
+                            ),
+                            Text(
+                              'Dark theme',
+                              style: TextStyle(fontSize: 18),
+                            )
+                          ],
+                        ),
+                      ],
+                    )),
+              ]),
         ),
         body: Container(
           margin: EdgeInsets.all(15),
           child: ListView(
             children: [
-              FutureBuilder(
-                  future: readData(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<Map>> snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                          itemCount: snapshot.data!.length,
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (context, i) {
-                            return NotesCader(
-                              title: "${snapshot.data![i]['titel']}",
-                              note: "${snapshot.data![i]['note']}",
-                            );
-                          });
-                    } else {
-                      return Text("");
-                    }
-                  }),
               Container(
                 margin: const EdgeInsets.only(top: 40, left: 15),
                 child: const Text(
@@ -82,10 +149,154 @@ class _HomeViewState extends State<HomeView> {
               SizedBox(
                 height: AppConstant.screenHeight * .04,
               ),
+              ListView.builder(
+                  itemCount: notes.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, i) {
+                    return InkWell(
+                      onTap: () {
+                        Get.to(Editnote(
+                            titel: notes[i]['titel'],
+                            note: notes[i]['note'],
+                            id: notes[i]['id']));
+                      },
+                      child: Container(
+                          margin: EdgeInsets.fromLTRB(10, 8, 10, 8),
+                          height: 110,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 2),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Material(
+                            color: Color.fromARGB(0, 64, 59, 59),
+                            borderRadius: BorderRadius.circular(16),
+                            clipBehavior: Clip.antiAlias,
+                            child: Container(
+                              padding: EdgeInsets.all(16),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Center(
+                                    child: Stack(
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "${notes[i]['titel']}",
+                                              style: TextStyle(
+                                                  fontFamily: 'ZillaSlab',
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  fontSize: 20),
+                                            )),
+                                        Container(
+                                          alignment: Alignment.topRight,
+                                          margin: EdgeInsets.only(bottom: 45),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8)),
+                                                      title:
+                                                          Text('Delete Note'),
+                                                      content: Text(
+                                                          'This note will be deleted permanently'),
+                                                      actions: <Widget>[
+                                                        InkWell(
+                                                          onTap: () async {
+                                                            int response =
+                                                                await sqlDb
+                                                                    .deletData(
+                                                                        "DELETE FROM notes WHERE id=${notes[i]['id']}");
+                                                            Navigator.pop(
+                                                                context);
+                                                            if (response > 0) {
+                                                              notes.removeWhere(
+                                                                  (element) =>
+                                                                      element[
+                                                                          'id'] ==
+                                                                      notes[i][
+                                                                          'id']);
+                                                              setState(() {});
+                                                            }
+                                                          },
+                                                          child: Container(
+                                                            child: Text(
+                                                                'DELETE',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .red
+                                                                        .shade300,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    letterSpacing:
+                                                                        1)),
+                                                          ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: Container(
+                                                            child: Text(
+                                                                'CANCEL',
+                                                                style: TextStyle(
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    letterSpacing:
+                                                                        1)),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    );
+                                                  });
+                                            },
+                                            child: Icon(
+                                              Icons.cancel,
+                                              color: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )),
+                    );
+                  }),
               GestureDetector(
                   onTap: () => Get.to(Add_Note()), child: AddnoteCader()),
             ],
           ),
         ));
+  }
+
+  void handleThemeSelection(String? value) {
+    setState(() {
+      selectedTheme = value!;
+    });
+    if (value == 'light') {
+      widget.changeTheme(Brightness.light);
+    } else {
+      widget.changeTheme(Brightness.dark);
+    }
+    setThemeinSharedPref(value!);
   }
 }

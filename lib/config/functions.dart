@@ -1,3 +1,6 @@
+import 'package:notes_apk/themes/dark_theme.dart';
+import 'package:notes_apk/themes/light_theme.dart';
+
 class AppFunction {
   AppFunction._();
 
@@ -12,4 +15,7 @@ class AppFunction {
       });
     }
   }
+
+
+  
 }

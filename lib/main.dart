@@ -1,8 +1,9 @@
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 import 'package:notes_apk/View/homeview.dart';
-import "package:notes_apk/View/loading.dart";
+import "package:notes_apk/service/sharedprefect.dart";
 
+import "package:notes_apk/themes/theme.dart";
 
 void main() async {
   runApp(
@@ -10,14 +11,27 @@ void main() async {
   );
 }
 
-class APK_NOTE extends StatelessWidget {
+class APK_NOTE extends StatefulWidget {
   const APK_NOTE({super.key});
+
+  @override
+  State<APK_NOTE> createState() => _APK_NOTEState();
+}
+
+class _APK_NOTEState extends State<APK_NOTE> {
+    ThemeData theme = appThemeLight;
+      @override
+  void initState() {
+    super.initState();
+    updateThemeFromSharedPref();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       // title: AppKeys.app_title.name.tr,
-      // theme: AppTheme.light,
+      theme: theme,
+      // darkTheme: Darktheme,
       debugShowCheckedModeBanner: false,
       transitionDuration: Duration.zero,
       smartManagement: SmartManagement.full,
@@ -25,7 +39,28 @@ class APK_NOTE extends StatelessWidget {
       // translations: AppTranslation(),
       // locale: Locale(LanguagesCode.fr.name),
       // fallbackLocale: Locale(LanguagesCode.fr.name),
-      home:  LoadingView(),
+      home: HomeView(title: 'Home', changeTheme: setTheme),
     );
+  }
+
+    setTheme(Brightness brightness) {
+    if (brightness == Brightness.dark) {
+      setState(() {
+        theme = appThemeDark;
+      });
+    } else {
+      setState(() {
+        theme = appThemeLight;
+      });
+    }
+  }
+
+  void updateThemeFromSharedPref() async {
+    String? themeText = await getThemeFromSharedPref();
+    if (themeText == 'light') {
+      setTheme(Brightness.light);
+    } else {
+      setTheme(Brightness.dark);
+    }
   }
 }
