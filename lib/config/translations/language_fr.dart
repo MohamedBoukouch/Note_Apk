@@ -3,5 +3,5 @@
 import "app_translation.dart";
 
 final Map<String, String> language_fr = <String, String>{
-  AppKeys.app_title.name: "Parametter",
+  AppKeys.Setting.name: "Parametter",
 };

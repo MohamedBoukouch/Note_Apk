@@ -22,7 +22,7 @@ class _AddnoteCaderState extends State<AddnoteCader> {
         child: Material(
           color: Theme.of(context).brightness == Brightness.light
               ? Color.fromARGB(151, 255, 255, 255)
-              : Colors.grey[800]!,
+              : Colors.grey[700]!,
           borderRadius: BorderRadius.circular(16),
           clipBehavior: Clip.antiAlias,
           child: Container(

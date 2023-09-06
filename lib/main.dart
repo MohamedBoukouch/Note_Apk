@@ -2,11 +2,13 @@ import "package:flutter/material.dart";
 import "package:get/get.dart";
 import 'package:notes_apk/View/homeview.dart';
 import "package:notes_apk/config/enums/app_enum.dart";
+import "package:notes_apk/config/translations/app_translation.dart";
 import "package:notes_apk/service/sharedprefect.dart";
 
 import "package:notes_apk/themes/theme.dart";
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     const APK_NOTE(),
   );
@@ -37,10 +39,9 @@ class _APK_NOTEState extends State<APK_NOTE> {
       transitionDuration: Duration.zero,
       smartManagement: SmartManagement.full,
       defaultTransition: Transition.noTransition,
-      // supportedLocales: L10n.all,
-      // translations: AppTranslation(),
+      translations: AppTranslation(),
       locale: Locale(LanguagesCode.fr.name),
-      // fallbackLocale: Locale(LanguagesCode.fr.name),
+      fallbackLocale: Locale(LanguagesCode.fr.name),
       home: HomeView(title: 'Home', changeTheme: setTheme),
     );
   }

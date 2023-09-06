@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:notes_apk/View/addnote.dart';
 import 'package:notes_apk/View/editnote.dart';
 import 'package:notes_apk/config/constante.dart';
+import 'package:notes_apk/config/translations/app_translation.dart';
 import 'package:notes_apk/service/sharedprefect.dart';
 import 'package:notes_apk/shared/addnotecader.dart';
 import 'package:notes_apk/shared/notes_cader.dart';
@@ -110,8 +111,8 @@ class _HomeViewState extends State<HomeView> {
               padding: EdgeInsets.only(
                   top: AppConstant.screenHeight * .07, left: 20),
               children: [
-                const Text(
-                  "Settings",
+                Text(
+                  AppKeys.Setting.name.tr,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,
@@ -187,7 +188,7 @@ class _HomeViewState extends State<HomeView> {
               const SizedBox(
                 height: AppConstant.heightBar * .4,
               ),
-              Search_favorit(),
+              // Search_favorit(),
               SizedBox(
                 height: AppConstant.screenHeight * .04,
               ),
@@ -219,7 +220,7 @@ class _HomeViewState extends State<HomeView> {
                             color:
                                 Theme.of(context).brightness == Brightness.light
                                     ? Colors.white
-                                    : Colors.grey[700]!,
+                                    : Colors.grey[800]!,
                             borderRadius: BorderRadius.circular(16),
                             clipBehavior: Clip.antiAlias,
                             child: Container(
