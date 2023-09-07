@@ -40,8 +40,8 @@ class _APK_NOTEState extends State<APK_NOTE> {
       smartManagement: SmartManagement.full,
       defaultTransition: Transition.noTransition,
       translations: AppTranslation(),
-      locale: Locale(LanguagesCode.fr.name),
-      fallbackLocale: Locale(LanguagesCode.fr.name),
+      locale: Locale(LanguagesCode.en.name),
+      fallbackLocale: Locale(LanguagesCode.en.name),
       home: HomeView(title: 'Home', changeTheme: setTheme),
     );
   }

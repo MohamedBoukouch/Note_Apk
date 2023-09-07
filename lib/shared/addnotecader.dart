@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:notes_apk/config/translations/app_translation.dart';
 
 class AddnoteCader extends StatefulWidget {
   const AddnoteCader({super.key});
@@ -41,7 +43,7 @@ class _AddnoteCaderState extends State<AddnoteCader> {
                       Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Add new note',
+                            AppKeys.add_button_1.name.tr,
                             style: TextStyle(
                                 fontFamily: 'ZillaSlab',
                                 color: Theme.of(context).primaryColor,

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:notes_apk/View/homeview.dart';
 import 'package:notes_apk/config/constante.dart';
+import 'package:notes_apk/config/translations/app_translation.dart';
 import 'package:notes_apk/sqldb.dart';
 
 class Editnote extends StatefulWidget {
@@ -56,7 +57,7 @@ class _EditnoteState extends State<Editnote> {
           }
         },
         label: Text(
-          'Save'.toUpperCase(),
+          AppKeys.save_button.name.tr.toUpperCase(),
           style: TextStyle(
             color: Theme.of(context).brightness == Brightness.light
                 ? Color.fromARGB(255, 110, 108, 108)
@@ -90,7 +91,7 @@ class _EditnoteState extends State<Editnote> {
                                   : Colors.white,
                               fontSize: 30),
                           decoration: InputDecoration.collapsed(
-                              hintText: "Titel",
+                              hintText: AppKeys.titel.name.tr,
                               hintStyle: TextStyle(
                                   fontSize: 30,
                                   color: Theme.of(context).brightness ==
@@ -114,7 +115,7 @@ class _EditnoteState extends State<Editnote> {
                                   : Colors.white,
                               fontSize: 20),
                           decoration: InputDecoration.collapsed(
-                              hintText: "Start typing ...",
+                              hintText: AppKeys.start_typing.name.tr,
                               hintStyle: TextStyle(
                                   fontSize: 20,
                                   color: Theme.of(context).brightness ==

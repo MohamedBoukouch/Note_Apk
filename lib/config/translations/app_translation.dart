@@ -21,4 +21,19 @@ class AppTranslation extends Translations {
 enum AppKeys {
   app_title,
   Setting,
+  App_theme,
+  light_theme,
+  dark_theme,
+  language,
+  your_notes,
+  add_button_1,
+  add_button_2,
+  save_button,
+  titel,
+  start_typing,
+  titel_message_error,
+  message_error,
+  cancel,
+  delet,
+
 }

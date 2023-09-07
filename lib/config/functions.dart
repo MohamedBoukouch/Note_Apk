@@ -16,6 +16,6 @@ class AppFunction {
     }
   }
 
-
+// static Local
   
 }
