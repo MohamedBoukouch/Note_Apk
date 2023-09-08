@@ -28,6 +28,7 @@ class _HomeViewState extends State<HomeView> {
   bool _langageSelected_fr = false;
   bool _langageSelected_en = false;
   bool _langageSelected_ar = false;
+  bool _langageSelected_tm = false;
   List notes = [];
 
   Future readData() async {
@@ -167,8 +168,8 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     )),
                 Container(
-                    margin: EdgeInsets.only(right: 20, top: 40),
-                    height: AppConstant.screenHeight * .35,
+                    margin: EdgeInsets.only(right: 20, top: 38),
+                    height: AppConstant.screenHeight * .40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Theme.of(context).brightness == Brightness.light
@@ -197,6 +198,7 @@ class _HomeViewState extends State<HomeView> {
                                     _langageSelected_fr = !_langageSelected_fr;
                                     _langageSelected_en = false;
                                     _langageSelected_ar = false;
+                                    _langageSelected_tm = false;
                                   },
                                   child: Container(
                                     height: AppConstant.screenHeight * .05,
@@ -225,6 +227,7 @@ class _HomeViewState extends State<HomeView> {
                                     _langageSelected_en = !_langageSelected_en;
                                     _langageSelected_fr = false;
                                     _langageSelected_ar = false;
+                                    _langageSelected_tm = false;
                                   },
                                   child: Container(
                                     height: AppConstant.screenHeight * .05,
@@ -252,6 +255,7 @@ class _HomeViewState extends State<HomeView> {
                                     _langageSelected_ar = !_langageSelected_ar;
                                     _langageSelected_fr = false;
                                     _langageSelected_en = false;
+                                    _langageSelected_tm = false;
                                   },
                                   child: Container(
                                     height: AppConstant.screenHeight * .05,
@@ -265,6 +269,31 @@ class _HomeViewState extends State<HomeView> {
                                     child: Center(
                                       child: Text(
                                         "العربية",
+                                        style: TextStyle(fontSize: 19),
+                                      ),
+                                    ),
+                                  )),
+                              InkWell(
+                                  onTap: () {
+                                    Get.updateLocale(
+                                        Locale(LanguagesCode.tm.name));
+                                    _langageSelected_tm = !_langageSelected_tm;
+                                    _langageSelected_fr = false;
+                                    _langageSelected_ar = false;
+                                    _langageSelected_en = false;
+                                  },
+                                  child: Container(
+                                    height: AppConstant.screenHeight * .05,
+                                    width: AppConstant.screenWidth,
+                                    decoration: BoxDecoration(
+                                        color: _langageSelected_tm == false
+                                            ? Colors.transparent
+                                            : Color.fromARGB(255, 4, 223, 121),
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: Center(
+                                      child: Text(
+                                        "ⴰⵎⴰⵣⵉⵖⴰ",
                                         style: TextStyle(fontSize: 19),
                                       ),
                                     ),

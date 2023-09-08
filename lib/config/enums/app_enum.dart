@@ -1,4 +1,4 @@
-enum LanguagesCode { en, ar, fr }
+enum LanguagesCode { en, ar, fr, tm }
 
 enum AuthProvider { password }
 

@@ -13,7 +13,7 @@ final Map<String, String> language_ar = <String, String>{
   AppKeys.add_button_2.name:"إضافة ملاحظة ",
   AppKeys.save_button.name:"حفظ",
   AppKeys.titel.name:"العنوان",
-  AppKeys.start_typing.name:"ابدأ الكتابة",
+  AppKeys.start_typing.name:"...ابدأ الكتابة",
   AppKeys.titel_message_error.name:"حذف الملاحظة",
   AppKeys.message_error.name:"سيتم حذف هذه الملاحظة بشكل دائم",
   AppKeys.cancel.name:"الرجوع",

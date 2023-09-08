@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 import 'package:notes_apk/View/homeview.dart';
+import "package:notes_apk/View/loading.dart";
 import "package:notes_apk/config/enums/app_enum.dart";
 import "package:notes_apk/config/translations/app_translation.dart";
 import "package:notes_apk/service/sharedprefect.dart";

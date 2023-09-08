@@ -13,7 +13,7 @@ final Map<String, String> language_fr = <String, String>{
   AppKeys.add_button_2.name: "Ajouter une note",
   AppKeys.save_button.name: "Sauvegarder",
   AppKeys.titel.name: "Titre",
-  AppKeys.start_typing.name: "Commencer à écrire",
+  AppKeys.start_typing.name: "Commencer à écrire...",
   AppKeys.titel_message_error.name: "supprimer la note",
   AppKeys.message_error.name: "cette note sera supprimée définitivement",
   AppKeys.cancel.name: "Retur",

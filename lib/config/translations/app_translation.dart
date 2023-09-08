@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import "package:get/get.dart";
+import "package:notes_apk/config/translations/language_tm.dart";
 
 import "../enums/app_enum.dart";
 import "language_ar.dart";
@@ -14,6 +15,7 @@ class AppTranslation extends Translations {
       LanguagesCode.en.name: language_en,
       LanguagesCode.ar.name: language_ar,
       LanguagesCode.fr.name: language_fr,
+      LanguagesCode.tm.name: language_tm,
     };
   }
 }
@@ -35,5 +37,4 @@ enum AppKeys {
   message_error,
   cancel,
   delet,
-
 }
